@@ -1,12 +1,20 @@
-import { ReactElement, createContext, useEffect, useState } from "react";
+import {
+  ReactElement,
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import { Photo } from "../utils/interfaces";
 import axios from "axios";
 
 const photos: Photo[] = [];
+const favPhotos: Photo[] = [];
 const cartPhotos: Photo[] = [];
 const PhotosContext = createContext({
   photos,
   cartPhotos,
+  favPhotos,
   toggleIsFavourite: (value: string) => {
     return;
   },
@@ -27,6 +35,7 @@ function PhotosContextProvider({ children }: { children: ReactElement }) {
 
   // https://picsum.photos/v2/list
   const [cartPhotos, setCartPhotos] = useState<Photo[]>([]);
+  const [favPhotos, setFavPhotos] = useState<Photo[]>([]);
   const addToCart = (photo: Photo) => {
     setCartPhotos((prevCart) => [...prevCart, photo]);
   };
@@ -46,6 +55,7 @@ function PhotosContextProvider({ children }: { children: ReactElement }) {
       return photo;
     });
     setPhotos(newPhotos);
+    setFavPhotos(newPhotos.filter((photo) => photo.isFavorite));
   };
 
   const clearCart = () => {
@@ -66,6 +76,7 @@ function PhotosContextProvider({ children }: { children: ReactElement }) {
         addToCart,
         removeFromCart,
         clearCart,
+        favPhotos,
       }}
     >
       {children}
@@ -73,4 +84,8 @@ function PhotosContextProvider({ children }: { children: ReactElement }) {
   );
 }
 
-export { PhotosContextProvider, PhotosContext };
+const usePhoto = () => {
+  return useContext(PhotosContext);
+};
+
+export { PhotosContextProvider, PhotosContext, usePhoto };
