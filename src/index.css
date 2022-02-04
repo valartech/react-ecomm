@@ -20,4 +20,7 @@
   .grid-images {
     @apply grid grid-cols-images auto-rows-100px gap-2 grid-flow-row-dense px-5 my-10;
   }
+  .grid-images-fav {
+    @apply grid grid-cols-images  auto-rows-100px gap-3 grid-flow-row-dense px-5 my-10 max-w-4xl mx-auto p-2;
+  }
 }

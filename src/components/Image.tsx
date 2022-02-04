@@ -83,6 +83,10 @@ function Image({ photo, index }: { photo: Photo; index: number }) {
   index: PropTypes.number,
 }; */
 
+Image.defaultProps = {
+  index: 1,
+};
+
 /* Not required as we are using typescript */
 
 export default Image;
